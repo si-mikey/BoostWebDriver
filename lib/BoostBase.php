@@ -60,8 +60,6 @@ class Boost{
 		}
 }
 
-//example
-$s = new Boost();
 
 
 
