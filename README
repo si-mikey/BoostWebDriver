@@ -1,6 +1,9 @@
 TODO:
-add phpunit option for assertions
-complete JWP command list integration
-improve code
-create unit test
+1. add phpunit option for assertions
+2. complete JWP command list integration
+3. improve code
+4. create unit test
 
+Instructions:
+1. launch selenium server if not using port 4444 specific in new object like so
+$object = new Boost("http://127.0.0.1:4444/wd/hub");
