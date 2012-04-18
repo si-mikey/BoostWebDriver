@@ -5,7 +5,7 @@ require("../lib/BoostBase.php");
 $s = new Boost();
 
 
-$s->set_url("www.google.com");
+$s->set_url("http://www.google.com");
 
 
 sleep(3);
