@@ -2,7 +2,6 @@ TODO:
 1. add phpunit option for assertions
 2. complete JWP command list integration
 3. improve code
-4. create unit test
 
 Instructions:
 1. launch selenium server if not using port 4444 specific in new object like so
