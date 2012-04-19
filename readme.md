@@ -1,6 +1,7 @@
 Instructions:
 =========
 1. launching a new instance, arguments are optional if they are defaults like below.
+2. You need to have cURL enabled.
 
 ```php
 <?php
