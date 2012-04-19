@@ -47,18 +47,9 @@ public static function curl($http, $curl_url, $data=null, $encode_data=TRUE){
 	unset($this->session_id);
 	unset($this->webdriver_url);
 	unset($this);
-	
-	
-	
-	
 }*/
 	
-	public function action($fetch_type, $rel_url , $data=null){
-		if( $data !== null )  { $data = json_encode($data); }
 
-		$full_url = $this->webdriver_url;
-		$full_url .= str_replace(":sessionId", $this->session_id, $rel_url);
-		return Boost::curl($fetch_type, $full_url, $data);
 
 
 
