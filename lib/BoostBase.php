@@ -6,26 +6,26 @@ protected $webdriver_url;
 
 public function __construct($webdriver_url=null, $capabilities=null){
 
-		if($webdriver_url === null) $webdriver_url = "http://127.0.0.1:4444/wd/hub";		
-		 $this->webdriver_url = $webdriver_url;
-		 
+	if($webdriver_url === null) $webdriver_url = "http://127.0.0.1:4444/wd/hub";		
+		$this->webdriver_url = trim($webdriver_url);
+
 		if( $capabilities === null) $capabilities['browserName'] = 'firefox';		
 		$json = array("desiredCapabilities" => $capabilities);
-		
+
 		$output = Boost::curl("POST", $this->webdriver_url . '/session', json_encode($json));
 
 	 	preg_match("/session\/(.*)\n/", $output, $sess);
-		
+
 		if( $sess[1] ){
 
-		$this->session_id = $sess[1];
+		$this->session_id = trim($sess[1]);
 		}else{
 
-			throw new Exception("Did not receive a session id, wrong server URL or port");
+		throw new Exception("Did not receive a session id, wrong server URL or port");
 		} 
  
-        }
-  
+	}
+
 public static function curl($http, $curl_url, $data=null, $encode_data=TRUE){
 
 		$ch = curl_init($curl_url);
@@ -51,21 +51,19 @@ public static function curl($http, $curl_url, $data=null, $encode_data=TRUE){
 	
 	
 	
-} */
+}*/
 	
- 	public function action($fetch_type, $rel_url , $data=null){
-		
-			if( $data !== null )  { $data = json_encode($data); }
-			
-				$full_url = $this->webdriver_url;
-				$full_url .= str_replace(":sessionId", $this->session_id, $rel_url);
-			 
-				return Boost::curl($fetch_type, $full_url, $data);
+	public function action($fetch_type, $rel_url , $data=null){
+		if( $data !== null )  { $data = json_encode($data); }
 
-		
-	} 		
-		
-	//kill the session
+		$full_url = $this->webdriver_url;
+		$full_url .= str_replace(":sessionId", $this->session_id, $rel_url);
+		return Boost::curl($fetch_type, $full_url, $data);
+
+
+
+
+//kill the session
 	public function kill(){
 
 		return Boost::curl("DELETE", $this->webdriver_url . '/session/' . $this->session_id);
@@ -75,10 +73,10 @@ public static function curl($http, $curl_url, $data=null, $encode_data=TRUE){
 	
 	public function set_url($url){
 		
-		$full_url = trim($this->webdriver_url) . '/session/' . trim($this->session_id) ."/url";		
-		$dump = array("url" => $url);
-		$dump = json_encode($dump);
-		return Boost::curl("POST", $full_url, $dump );		
+		$full_url = $this->webdriver_url . '/session/' . $this->session_id ."/url";		
+		$urlarr = array("url" => $url);
+		$urlarr = json_encode($urlarr);
+		return Boost::curl("POST", $full_url, $urlarr );		
 	}
 	
 
