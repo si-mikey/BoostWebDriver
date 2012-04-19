@@ -1,6 +1,6 @@
 Instructions:
 =========
-1. launching a new instance, arguments are optional if they are defaults like below.
+1. launching a new instance, which navigates to google.com
 2. You need to have cURL enabled.
 
 ```php
