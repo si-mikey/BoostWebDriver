@@ -6,7 +6,7 @@ Instructions:
 
 	$wd->set_url("http://www.shutterstock.com"); //must contains HTTP protocol. 
 
-### TODO
+### TODO:
 
 1. add phpunit option for assertions
 2. complete JWP command list integration
