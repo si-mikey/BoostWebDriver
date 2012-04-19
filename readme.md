@@ -2,9 +2,22 @@ Instructions:
 =========
 1. launching a new instance, arguments are optional if they are defaults like below.
 
-	$wd = new Boost("http://127.0.0.1:4444/wd/hub", "firefox"); //arguments are optional for constructor. 	
+```php
+<?php
 
-	$wd->set_url("http://www.shutterstock.com"); //must contains HTTP protocol. 
+require("../lib/BoostBase.php");
+
+$session = new Boost("http://127.0.0.1:4444/wd/hub", "firefox"); //arguments are optional for constructor. 
+
+$session->set_url("http://www.google.com"); //must contains HTTP protocol. 
+
+//adding wait statement in following release
+sleep(2);
+
+$s->kill();
+
+?>
+```
 
 ### TODO:
 
