@@ -8,7 +8,8 @@ Instructions:
 
 require("../lib/BoostBase.php");
 
-//arguments are optional for constructor. Will choose defaults [Browser : Firefox , Location: http://127.0.0.1:4444/wd/hub]
+//arguments are optional for constructor. 
+//Will choose defaults [Browser : Firefox , Location: http://127.0.0.1:4444/wd/hub]
 $session = new Boost(); 
 
 //must contains HTTP protocol. 
