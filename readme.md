@@ -17,7 +17,7 @@ $session->set_url("http://www.google.com");
 //adding wait statement in following release
 sleep(2);
 
-$s->kill();
+$session->kill();
 
 ?>
 ```
