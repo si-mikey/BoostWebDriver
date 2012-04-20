@@ -20,9 +20,9 @@ sleep(2);
 
 //$array = $session->get_sessions();
 
+//$array = $session->get_session();
 
-
-
+$session->set_timeouts("page load", 10000);
 
 
 

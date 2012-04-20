@@ -88,7 +88,7 @@ public function get_url(){
 public function get_status(){
 	
 	$full_url = $this->webdriver_url . '/status';
-	$response = Boost:: curl("GET", $full_url, FALSE, FALSE);
+	$response = Boost:: curl("GET", $full_url, NULL ,FALSE, FALSE);
 	return Boost::jsonParse($response);	
 }
 
@@ -96,16 +96,29 @@ public function get_status(){
 public function get_sessions(){
 	
 	$full_url = $this->webdriver_url . '/sessions';
-	$response = Boost:: curl("GET", $full_url, FALSE, FALSE);
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
+	return Boost::jsonParse($response);	
+}
+
+
+public function get_session(){
+	
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id;
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);	
 }
 
 
 
-
-
-
-
+public function set_timeouts($type, $ms){
+	
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/timeouts';
+	//possible types are "script",  "implicit", "page load"
+	$data = array("type"=>"$type", "ms"=>$ms);
+	$data = json_encode($data);	
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response);	
+}
 
 
 
