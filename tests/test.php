@@ -22,7 +22,7 @@ sleep(2);
 
 //$array = $session->get_session();
 
-$session->set_timeouts("page load", 10000);
+//$session->set_timeouts("page load", 10000);
 
 
 

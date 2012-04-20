@@ -1,6 +1,7 @@
 Instructions:
 =========
-1. launching a new instance, which navigates to google.com
+1. launching a new instance, which navigates to google.com, sleeps then dies.
+see tests/ for more examples.
 2. You need to have cURL enabled.
 
 ```php
