@@ -2,14 +2,62 @@
 
 require("../lib/BoostBase.php");
 
-$session = new Boost("http://127.0.0.1:4444/wd/hub", "opera"); //arguments are optional for constructor. 
+//arguments are optional for constructor. 
+$session = new Boost("http://127.0.0.1:4444/wd/hub", "firefox"); 
 
-$session->set_url("http://www.google.com"); //must contains HTTP protocol. 
+//must contains HTTP protocol. 
+$session->set_url("http://www.google.com"); 
+
 
 //adding wait statement in following release
 sleep(2);
 
-$session->kill(); 
+//$session->get_url();
+
+//$session->kill(); 
+
+//$array = $session->get_status();
+
+//$array = $session->get_sessions();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
