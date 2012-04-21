@@ -100,7 +100,7 @@ public function get_sessions(){
 	return Boost::jsonParse($response);	
 }
 
-
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId
 public function get_session(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id;
@@ -109,7 +109,7 @@ public function get_session(){
 }
 
 
-
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/timeouts
 public function set_timeouts($type, $ms){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/timeouts';
@@ -120,9 +120,13 @@ public function set_timeouts($type, $ms){
 	return Boost::jsonParse($response);	
 }
 
-
-
-
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handle
+public function get_window_handle(){
+	
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window_handle';
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
+	return Boost::jsonParse($response);	
+}
 
 
 

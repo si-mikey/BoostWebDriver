@@ -24,7 +24,7 @@ sleep(2);
 
 //$session->set_timeouts("page load", 10000);
 
-
+//$session->get_window_handle();
 
 
 
