@@ -24,11 +24,19 @@ sleep(2);
 
 //$session->set_timeouts("page load", 10000);
 
+//$session->set_async_timeout(5000);
+
 //$session->get_window_handle();
 
+//$array = $session->get_window_handles() ;
 
+//$session->forward();
 
+//$session->back();
 
+//$session->refresh();
+
+//echo $session->screenshot();
 
 
 
