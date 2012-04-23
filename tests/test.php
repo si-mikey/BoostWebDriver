@@ -26,7 +26,7 @@ sleep(2);
 
 //$session->set_async_timeout(5000);
 
-//$session->get_window_handle();
+//$handle = $session->get_window_handle();
 
 //$array = $session->get_window_handles() ;
 
@@ -40,12 +40,15 @@ sleep(2);
 
 //$arr = $session->frame();
 
-//$session->window("test");
+//$session->window_focus("test");
 
-$session->window_delete();
+//$session->window_close();
 
-sleep(3);
+// can take optional parameter like window_resize(300,500, $WINDOW_HANDLE) otherwise it uses active window
+//$session->window_resize("300", "500");
 
+
+sleep(5);
 
 
 

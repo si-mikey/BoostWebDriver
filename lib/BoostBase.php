@@ -195,7 +195,7 @@ public function screenshot(){
 	return Boost::jsonParse($response);	
 }
 
-
+//NEEDS ERROR CODE OR USE MESSAGE IN RESPONSE JSON
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/frame
 public function frame($frame_name){
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/frame';
@@ -207,13 +207,14 @@ public function frame($frame_name){
 	
 }
 
+//NEEDS ERROR CODE OR USE MESSAGE IN RESPONSE JSON
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window
-public function window($window_name){
+public function window_focus($window_name){
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window';
 	$data = array( "name"=>$window_name );
 	$data = json_encode($data);	
-	return $response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
-	//return Boost::jsonParse($response);	
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response);	
 	
 }
 
@@ -226,12 +227,16 @@ public function window_close(){
 }
 
 
-
-
-
-
-
-
+public function window_resize($width, $height, $win_handle="current"){
+	
+	$width = (integer)$width;
+	$height = (integer)$height;
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/size';
+	$data = array( "width"=>$width, "height"=>$height );
+	$data = json_encode($data);	
+	return $response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	//return Boost::jsonParse($response);	
+}
 
 
 
