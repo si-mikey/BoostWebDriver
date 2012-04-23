@@ -6,7 +6,7 @@ require("../lib/BoostBase.php");
 $session = new Boost("http://127.0.0.1:4444/wd/hub", "firefox"); 
 
 //must contains HTTP protocol. 
-$session->set_url("http://www.google.com"); 
+$session->set_url("http://www.shutterstock.com"); 
 
 
 //adding wait statement in following release
@@ -47,9 +47,10 @@ sleep(2);
 // can take optional parameter like window_resize(300,500, $WINDOW_HANDLE) otherwise it uses active window
 //$session->window_resize("300", "500");
 
-$array = $session->window_size();
-print_r($array);
+//$array = $session->window_size();
 
+
+echo $session->get_element("id", "index_keyword_input" );
 
 
 sleep(5);

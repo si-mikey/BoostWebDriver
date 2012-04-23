@@ -246,16 +246,16 @@ public function window_size( $win_handle="current" ){
 }
 
 
+//SKIPPED TO ELEMENT METHOD
+public function get_element( $using, $value ){
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/';
+	$data = array( "using"=>$using, "value"=>$value );
+	$data = json_encode($data);	
+	return $response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	//return Boost::jsonParse($response);	
 
 
-
-
-
-
-
-
-
-
+}
 
 
 
