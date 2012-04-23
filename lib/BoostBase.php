@@ -226,20 +226,24 @@ public function window_close(){
 	
 }
 
-
-public function window_resize($width, $height, $win_handle="current"){
-	
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/size
+public function window_resize($width, $height, $win_handle="current"){	
 	$width = (integer)$width;
 	$height = (integer)$height;
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/size';
 	$data = array( "width"=>$width, "height"=>$height );
 	$data = json_encode($data);	
-	return $response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
-	//return Boost::jsonParse($response);	
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response);	
 }
 
-
-
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window/:windowHandle/size
+public function window_size( $win_handle="current" ){
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/size';
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
+	return Boost::jsonParse($response);
+	
+}
 
 
 

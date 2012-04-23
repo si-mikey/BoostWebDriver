@@ -47,6 +47,10 @@ sleep(2);
 // can take optional parameter like window_resize(300,500, $WINDOW_HANDLE) otherwise it uses active window
 //$session->window_resize("300", "500");
 
+$array = $session->window_size();
+print_r($array);
+
+
 
 sleep(5);
 
