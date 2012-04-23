@@ -36,15 +36,15 @@ sleep(2);
 
 //$session->refresh();
 
-//echo $session->screenshot();
+//$session->screenshot();
 
+//$arr = $session->frame();
 
+//$session->window("test");
 
+$session->window_delete();
 
-
-
-
-
+sleep(3);
 
 
 
