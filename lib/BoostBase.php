@@ -313,6 +313,7 @@ public function get_element_info($element){
 
 
 
+
 ////////////////////////////////////////////////////////////////////////////
 //SKIPPED TO ELEMENT METHOD
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element
@@ -326,6 +327,7 @@ public function get_element( $using, $value ){
 	return Boost::jsonParse($response, "ELEMENT");	
 }
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/elements
 public function get_elements( $using, $value ){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/elements';
@@ -335,6 +337,24 @@ public function get_elements( $using, $value ){
 	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
 	return Boost::jsonParse($response);	
 }
+
+
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/element
+public function get_element_after( $element, $using, $value ){
+	
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/element';
+	//possible vals for using = 'class name' | css selector | id | name | link text | partial link text | tag name | xpath
+	$data = array( "using"=>$using, "value"=>$value );
+	$data = json_encode($data);
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response, "ELEMENT");	
+}
+
+
+
+
+
+
 
 
 

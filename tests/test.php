@@ -50,7 +50,7 @@ sleep(2);
 
 //$array = $session->get_elements("tag name", "a");
 
-//$element = $session->get_element("id","index_keyword_input" );
+$element = $session->get_element("id","login_form" );
 
 //$session->click($element);
 
@@ -58,6 +58,8 @@ sleep(2);
 //$session->set_window_position(300, 400);
 
 //$array = $session->get_window_position();
+
+sleep(2);
 
 //$session->window_maximize();
 
@@ -70,7 +72,7 @@ sleep(2);
 //$array = $session->get_element_info($element);
 
 
-sleep(3);
+//$session->get_element_after( $element, "id", "user" );
 
 
 
