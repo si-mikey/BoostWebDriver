@@ -19,6 +19,10 @@ $session->set_url("http://www.google.com");
 //adding wait statement in following release
 sleep(2);
 
+$element = $session->get_element("id","index_keyword_submit" );
+$session->click($element);
+
+
 $session->kill();
 
 ?>
