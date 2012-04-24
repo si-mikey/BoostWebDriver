@@ -48,9 +48,13 @@ sleep(2);
 
 //$array = $session->window_size();
 
+//$element = $session->get_element("id","index_keyword_submit" );
+//$session->click($element);
 
-$element = $session->get_element("id","index_keyword_submit" );
-$session->click($element);
+//Can take an optional $WINDOW_HANDLE parameter otherwise it uses "current"
+//echo $session->window_position(300, 400);
+
+
 
 
 sleep(3);

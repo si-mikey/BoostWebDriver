@@ -252,6 +252,23 @@ public function window_size( $win_handle="current" ){
 }
 
 
+public function window_position($x, $y, $win_handle="current"){
+	$x = (integer)$x;
+	$y = (integer)$y;
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/position';
+	$data = array( "x"=>$x, "y"=>$y );
+	$data = json_encode($data);	
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response);
+
+}
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
 //SKIPPED TO ELEMENT METHOD
 public function get_element( $using, $value ){
 	

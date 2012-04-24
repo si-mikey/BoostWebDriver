@@ -34,4 +34,6 @@ $session->kill();
 2. complete JWP command list integration
 3. improve code
 
+### License
 
+BoostWebDriver by Luis Lopez is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License. Based on a work at github.com.
