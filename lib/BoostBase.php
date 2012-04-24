@@ -46,19 +46,24 @@ public static function curl($http, $curl_url, $data = null, $encode_data = TRUE,
 public function __destruct(){
 	
 	Boost::curl("DELETE", $this->webdriver_url . '/session/' . $this->session_id);
-	unset($this->session_id);
-	unset($this->webdriver_url);
-	unset($this); 
+	//unset($this->session_id);
+	//unset($this->webdriver_url);
+	//unset($this); 
 	//echo "Cleaned session....";
 } 
 
 	
 
-public static function jsonParse($json){	
+public static function jsonParse($json, $key = null){	
 	$value = json_decode(trim($json), true);
 	//TODO: ADD RESPONSE STATUS CODES
-	
-	return $value['value'];
+ 	if($key){
+		return $value["value"]["$key"];
+		
+	}else{
+		
+		return $value['value'];
+	} 
 }		
 
 
@@ -198,36 +203,37 @@ public function screenshot(){
 //NEEDS ERROR CODE OR USE MESSAGE IN RESPONSE JSON
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/frame
 public function frame($frame_name){
+	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/frame';
 	//possible values are {string|number|null|WebElement JSON Object}
 	$data = array( "id"=>$frame_name );
 	$data = json_encode($data);	
 	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);	
-	
+	return Boost::jsonParse($response);		
 }
 
 //NEEDS ERROR CODE OR USE MESSAGE IN RESPONSE JSON
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window
 public function window_focus($window_name){
+	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window';
 	$data = array( "name"=>$window_name );
 	$data = json_encode($data);	
 	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);	
-	
+	return Boost::jsonParse($response);		
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/window
 public function window_close(){
+	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window';
 	return $response = Boost:: curl("DELETE", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);	
-	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/size
 public function window_resize($width, $height, $win_handle="current"){	
+
 	$width = (integer)$width;
 	$height = (integer)$height;
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/size';
@@ -239,23 +245,58 @@ public function window_resize($width, $height, $win_handle="current"){
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window/:windowHandle/size
 public function window_size( $win_handle="current" ){
+	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/size';
 	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);
-	
 }
 
 
 //SKIPPED TO ELEMENT METHOD
 public function get_element( $using, $value ){
+	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/';
+	//possible vals for using = 'class name' | css selector | id | name | link text | partial link text | tag name | xpath
 	$data = array( "using"=>$using, "value"=>$value );
 	$data = json_encode($data);	
-	return $response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
-	//return Boost::jsonParse($response);	
-
-
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response, "ELEMENT");	
 }
+
+
+public function click($element){
+	
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/click';
+	$response = Boost:: curl("POST", $full_url, NULL, FALSE, FALSE);
+	return Boost::jsonParse($response);	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

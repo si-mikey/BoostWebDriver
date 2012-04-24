@@ -8,7 +8,6 @@ $session = new Boost("http://127.0.0.1:4444/wd/hub", "firefox");
 //must contains HTTP protocol. 
 $session->set_url("http://www.shutterstock.com"); 
 
-
 //adding wait statement in following release
 sleep(2);
 
@@ -38,7 +37,7 @@ sleep(2);
 
 //$session->screenshot();
 
-//$arr = $session->frame();
+//$array = $session->frame();
 
 //$session->window_focus("test");
 
@@ -50,33 +49,11 @@ sleep(2);
 //$array = $session->window_size();
 
 
-echo $session->get_element("id", "index_keyword_input" );
+$element = $session->get_element("id","index_keyword_submit" );
+$session->click($element);
 
 
-sleep(5);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+sleep(3);
 
 
 ?>
