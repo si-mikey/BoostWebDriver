@@ -14,7 +14,7 @@ require("../lib/BoostBase.php");
 $session = new Boost(); 
 
 //must contains HTTP protocol. 
-$session->set_url("http://www.google.com"); 
+$session->set_url("http://www.shutterstock.com"); 
 
 //adding wait statement in following release
 sleep(2);
