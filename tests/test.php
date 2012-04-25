@@ -50,9 +50,8 @@ sleep(2);
 
 //$array = $session->get_elements("tag name", "a");
 
-//$element = $session->get_element("name","submit" );
-
-//$session->click($element);
+$element = $session->get_element("id","index_keyword_input" );
+$session->click($element);
 
 //Can take an optional $WINDOW_HANDLE parameter otherwise it uses "current"
 //$session->set_window_position(300, 400);
@@ -77,9 +76,9 @@ sleep(2);
 
 //$session->submit($element);
 
+//$session->get_text($element);
 
-
-
+$session->type("testing....");
 
 sleep(3);
 
