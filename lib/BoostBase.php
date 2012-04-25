@@ -50,20 +50,30 @@ public function __destruct(){
 	//unset($this->webdriver_url);
 	//unset($this); 
 	//echo "Cleaned session....";
-} 
+}
 
-	
 
-public static function jsonParse($json, $key = null){	
+public static function jsonParse($json, $key = null){
+
 	$value = json_decode(trim($json), true);
 	//TODO: ADD RESPONSE STATUS CODES
- 	if($key){
-		return $value["value"]["$key"];
+	
+	if( $value['status'] != 0 ){
 		
-	}else{
-		
-		return $value['value'];
-	} 
+		preg_match("/(.*)\n/", $value['value']['message'], $error);		
+		//throw new Exception( $error[0] );
+		echo $error[0];
+		exit;
+	}
+		if($key !== null){
+			
+			return $value["value"]["$key"];		
+		}else{
+			
+			return $value['value'];
+		} 
+
+	
 }		
 
 
@@ -304,6 +314,7 @@ public function get_active_element(){
 }
 
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/active
 public function get_element_info($element){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element;	
@@ -340,7 +351,7 @@ public function get_elements( $using, $value ){
 
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/element
-public function get_element_after( $element, $using, $value ){
+public function get_element_child( $element, $using, $value ){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/element';
 	//possible vals for using = 'class name' | css selector | id | name | link text | partial link text | tag name | xpath
@@ -351,11 +362,16 @@ public function get_element_after( $element, $using, $value ){
 }
 
 
-
-
-
-
-
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/elements
+public function get_element_children( $element, $using, $value ){
+	
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/element';
+	//possible vals for using = 'class name' | css selector | id | name | link text | partial link text | tag name | xpath
+	$data = array( "using"=>$using, "value"=>$value );
+	$data = json_encode($data);
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response);	
+}
 
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click
@@ -367,7 +383,13 @@ public function click($element){
 }
 
 
-
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/submit
+public function submit($element){
+	
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/submit';
+	$response = Boost:: curl("POST", $full_url, NULL, FALSE, FALSE);
+	return Boost::jsonParse($response);
+}
 
 
 

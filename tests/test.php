@@ -50,7 +50,7 @@ sleep(2);
 
 //$array = $session->get_elements("tag name", "a");
 
-$element = $session->get_element("id","login_form" );
+//$element = $session->get_element("name","submit" );
 
 //$session->click($element);
 
@@ -71,8 +71,19 @@ sleep(2);
 
 //$array = $session->get_element_info($element);
 
+//$session->get_element_child( $element, "id", "user" );
 
-//$session->get_element_after( $element, "id", "user" );
+//print_r($session->get_element_children( $element, "tag name", "input" ));
+
+//$session->submit($element);
+
+
+
+
+
+sleep(3);
+
+
 
 
 

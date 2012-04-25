@@ -22,6 +22,7 @@ sleep(2);
 $element = $session->get_element("id","index_keyword_submit" );
 $session->click($element);
 
+sleep(3);
 
 $session->kill();
 
