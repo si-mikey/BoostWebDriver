@@ -67,7 +67,6 @@ sleep(3);
 
 //$array = $session->get_window_position();
 
-sleep(4);
 
 //$session->window_maximize();
 

@@ -389,17 +389,10 @@ public function click( $element=null, $using=null, $value=null ){
 	if( $using != null && $value != null && $element == null){
 		
 		$element = $this->get_element($using, $value);
-	
-
-	}
-
-		
+	}		
 
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/click';
 	$response = Boost:: curl("POST", $full_url, NULL, FALSE, FALSE);
-	
-	//print_r($response);
-
 	return Boost::jsonParse($response);	
 }
 
