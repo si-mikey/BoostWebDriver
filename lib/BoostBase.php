@@ -57,13 +57,22 @@ public static function jsonParse($json, $key = null){
 
 	$value = json_decode(trim($json), true);
 	//TODO: ADD RESPONSE STATUS CODES
+
+	//print_r($value);
 	
-	if( $value['status'] != 0 ){
+
+	if( $value['status'] != 0 && $value['status'] ){
 		
 		preg_match("/(.*)\n/", $value['value']['message'], $error);		
 		//throw new Exception( $error[0] );
-		echo $error[0];
-		exit;
+
+		if( $error ){
+			echo $error[0];
+			exit;
+		}else{
+			echo "Unknown Error.";
+			exit;
+		}
 	}
 		if($key !== null){
 			
@@ -375,10 +384,22 @@ public function get_element_children( $element, $using, $value ){
 
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click
-public function click($element){
+public function click( $element=null, $using=null, $value=null ){
+
+	if( $using != null && $value != null && $element == null){
+		
+		$element = $this->get_element($using, $value);
 	
+
+	}
+
+		
+
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/click';
 	$response = Boost:: curl("POST", $full_url, NULL, FALSE, FALSE);
+	
+	//print_r($response);
+
 	return Boost::jsonParse($response);	
 }
 
