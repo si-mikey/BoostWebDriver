@@ -1,6 +1,6 @@
 Instructions:
 =========
-1. launching a new instance, which navigates to wwwshutterstock.com, sleeps then dies.
+1. launching a new instance, which navigates to www.shutterstock.com, sleeps then dies.
 see tests/ for more examples.
 2. You need to have cURL enabled.
 
@@ -19,8 +19,14 @@ $session->set_url("http://www.shutterstock.com");
 //adding wait statement in following release
 sleep(2);
 
+//get and set and element object to $element;
 $element = $session->get_element("id","index_keyword_submit" );
+//click on the $element
 $session->click($element);
+
+//Another way to click on an element;
+//this fetches the $element within the click method and clicks it directly.
+$session->click(null, "id", "index_keyword_submit");
 
 sleep(3);
 
