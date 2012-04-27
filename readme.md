@@ -1,8 +1,7 @@
 Instructions:
 =========
-1. launching a new instance, which navigates to www.shutterstock.com, sleeps then dies.
-see tests/ for more examples.
-2. You need to have cURL enabled.
+1. The below example loads up www.shutterstock.com waits 2 seconds then shows two methods of clicking on a submit button. Comment one of them to test the other.see tests/ for more examples.
+2. You need to have cURL enabled in your php.ini.
 
 ```php
 <?php
@@ -34,6 +33,12 @@ $session->kill();
 
 ?>
 ```
+Note:
+=====
+1. For reporting options you can use PHPUnit
+
+
+
 
 ### TODO:
 
