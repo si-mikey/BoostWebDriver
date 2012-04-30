@@ -332,8 +332,6 @@ public function get_element_info($element){
 }
 
 
-
-
 ////////////////////////////////////////////////////////////////////////////
 //SKIPPED TO ELEMENT METHOD
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element
