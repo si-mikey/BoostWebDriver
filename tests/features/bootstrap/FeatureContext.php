@@ -40,7 +40,7 @@ class FeatureContext extends BehatContext
 	 $session->type("llopez522");
 	 $session->click(null, "id","pass");
 	 $session->type("testing");
-	 $session->click(null, "name", "submit");
+	 $session->click(null,"name", "submit");
 	 
   }
 
