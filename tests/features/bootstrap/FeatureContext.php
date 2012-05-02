@@ -20,9 +20,15 @@ class FeatureContext extends BehatContext
      *
      * @param   array   $parameters     context parameters (set them up through behat.yml)
      */
+    
+    public $session;
+
     public function __construct(array $parameters)
     {
         // Initialize your context here
+        
+     $this->session = new Boost("http://127.0.0.1:4444/wd/hub", "firefox");
+
     }
 
 	
@@ -33,15 +39,14 @@ class FeatureContext extends BehatContext
   public function iAmLoggedInToShutterstock()
   {
      
-	 $session = new Boost("http://127.0.0.1:4444/wd/hub", "firefox");
-	 
+     
 	 $session->set_url("http://www.shutterstock.com");
-	 $session->click(null, "id", "user");
-	 $session->type("llopez522");
-	 $session->click(null, "id","pass");
-	 $session->type("testing");
-	 $session->click(null,"name", "submit");
-	 
+     $session->click(null, "link text", "SIGN IN"); 
+     $session->type("");
+     $session->click(null, 'id', 'pass');
+     $session->type("");
+     $session->click(null, 'name', 'submit');
+     sleep(5);
   }
 
   /**
@@ -49,11 +54,11 @@ class FeatureContext extends BehatContext
    */
   public function iClickOn($link)
   {
-    
-	
-		$x = $link;
-	
-	
+     
+    $session->click(null, "partial link text", "Hi,");
+    slee(2);
+    $link = $session->click(null, "id", "user_account");
+    sleep(3);
   }
 
   /**
@@ -62,8 +67,14 @@ class FeatureContext extends BehatContext
   public function myIsDisplayed($username)
   {
       
+	$e = $session->get_element("class name", "ac2_username");
+    $username = $session = get_text($e);
+    if($username != "llopez522"){
+        
+        echo "Username \"$username\" is not present";
+
+    }
 	  
-	  $u = $username;
 	  
 	  
 	  
