@@ -9,7 +9,7 @@ public function __construct($webdriver_url = null, $capability = null){
 	if($webdriver_url === null) {$webdriver_url = "http://127.0.0.1:4444/wd/hub";}	
 	$this->webdriver_url = trim($webdriver_url);
 
-    if( $capability === null ) {$capabilities['browserName'] = "firefox";}
+    if( $capability === null ) {$capability = "firefox";}
 
 	//Validate browser or capability
 	if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" ) { $capabilities["browserName"] = $capability;
@@ -21,7 +21,7 @@ public function __construct($webdriver_url = null, $capability = null){
 
  	preg_match("/session\/(.*)\n/", $output, $sess);
 
-		if( $sess[1] ){
+		if( isset($sess[1]) ){
 
 		$this->session_id = trim($sess[1]);
 		}else{
