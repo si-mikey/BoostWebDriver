@@ -9,10 +9,11 @@ public function __construct($webdriver_url = null, $capability = null){
 	if($webdriver_url === null) {$webdriver_url = "http://127.0.0.1:4444/wd/hub";}	
 	$this->webdriver_url = trim($webdriver_url);
 
+    if( $capability === null ) {$capabilities['browserName'] = "firefox";}
+
 	//Validate browser or capability
 	if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" ) { $capabilities["browserName"] = $capability;
 	}else{ throw new Exception("Provided  browser is not supported");	}
-	if( $capability === null ) {$capabilities['browserName'] = "firefox";}
 	
 	$json = array("desiredCapabilities" => $capabilities);	
 	
