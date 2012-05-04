@@ -47,10 +47,7 @@ public static function curl($http, $curl_url, $data = null, $encode_data = TRUE,
 public function __destruct(){
 	
 	Boost::curl("DELETE", $this->webdriver_url . '/session/' . $this->session_id);
-	//unset($this->session_id);
-	//unset($this->webdriver_url);
 	//unset($this); 
-	//echo "Cleaned session....";
 }
 
 
@@ -65,7 +62,6 @@ public static function jsonParse($json, $key = null){
 	if( $value['status'] != 0 && $value['status'] ){
 		
 		preg_match("/(.*)\n/", $value['value']['message'], $error);		
-		//throw new Exception( $error[0] );
 
 		if( $error ){
 			echo $error[0];
@@ -383,12 +379,18 @@ public function get_element_children( $element, $using, $value ){
 
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/click
-public function click( $element=null, $using=null, $value=null ){
+public function click( ){
 
-	if( $using != null && $value != null && $element == null){
-		
-		$element = $this->get_element($using, $value);
-	}		
+    if( func_num_args() == 2 ){
+        
+        $using = func_get_arg(0);
+        $value = func_get_arg(1);
+        $element = $this->get_element($using, $value);
+
+    }else if( func_num_args() == 1){
+        
+        $element = func_get_arg(0);
+    }        
 
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/click';
 	$response = Boost:: curl("POST", $full_url, NULL, FALSE, FALSE);
@@ -405,72 +407,25 @@ public function submit($element){
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/text
-public function get_text($element){
-	
+public function get_text( ){
+    
+     if( func_num_args() == 2 ){
+        
+        $using = func_get_arg(0);
+        $value = func_get_arg(1);
+        $element = $this->get_element($using, $value);
+
+    }else if( func_num_args() == 1){
+        
+        $element = func_get_arg(0);
+    }        
+
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/text';
 	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);	
 }
 
 ///////////////////////////////////////////////////SEND KEYS//////////////////////////////////////////////
-public $keys = array(
-    'NullKey' => "\uE000",
-    'CancelKey' => "\uE001",
-    'HelpKey' => "\uE002",
-    'BackspaceKey' => "\uE003",
-    'TabKey' => "\uE004",
-    'ClearKey' => "\uE005",
-    'ReturnKey' => "\uE006",
-    'EnterKey' => "\uE007",
-    'ShiftKey' => "\uE008",
-    'ControlKey' => "\uE009",
-    'AltKey' => "\uE00A",
-    'PauseKey' => "\uE00B",
-    'EscapeKey' => "\uE00C",
-    'SpaceKey' => "\uE00D",
-    'PageUpKey' => "\uE00E",
-    'PageDownKey' => "\uE00F",
-    'EndKey' => "\uE010",
-    'HomeKey' => "\uE011",
-    'LeftArrowKey' => "\uE012",
-    'UpArrowKey' => "\uE013",
-    'RightArrowKey' => "\uE014",
-    'DownArrowKey' => "\uE015",
-    'InsertKey' => "\uE016",
-    'DeleteKey' => "\uE017",
-    'SemicolonKey' => "\uE018",
-    'EqualsKey' => "\uE019",
-    'Numpad0Key' => "\uE01A",
-    'Numpad1Key' => "\uE01B",
-    'Numpad2Key' => "\uE01C",
-    'Numpad3Key' => "\uE01D",
-    'Numpad4Key' => "\uE01E",
-    'Numpad5Key' => "\uE01F",
-    'Numpad6Key' => "\uE020",
-    'Numpad7Key' => "\uE021",
-    'Numpad8Key' => "\uE022",
-    'Numpad9Key' => "\uE023",
-    'MultiplyKey' => "\uE024",
-    'AddKey' => "\uE025",
-    'SeparatorKey' => "\uE026",
-    'SubtractKey' => "\uE027",
-    'DecimalKey' => "\uE028",
-    'DivideKey' => "\uE029",
-    'F1Key' => "\uE031",
-    'F2Key' => "\uE032",
-    'F3Key' => "\uE033",
-    'F4Key' => "\uE034",
-    'F5Key' => "\uE035",
-    'F6Key' => "\uE036",
-    'F7Key' => "\uE037",
-    'F8Key' => "\uE038",
-    'F9Key' => "\uE039",
-    'F10Key' => "\uE03A",
-    'F11Key' => "\uE03B",
-    'F12Key' => "\uE03C",
-    'CommandKey' => "\uE03D",
-    'MetaKey' => "\uE03D",
-  );
 
 public function type($text){
 	
@@ -482,7 +437,77 @@ public function type($text){
 }
 
 
+public function send_key($using, $value, $key){
 
+    $key = ucfirst(trim($key));
+    $keys = array(
+    'Null' => "\uE000",
+    'Cancel' => "\uE001",
+    'Help' => "\uE002",
+    'Backspace' => "\uE003",
+    'Tab' => "\uE004",
+    'Clear' => "\uE005",
+    'Return' => "\uE006",
+    'Enter' => "\uE007",
+    'Shift' => "\uE008",
+    'Control' => "\uE009",
+    'Alt' => "\uE00A",
+    'Pause' => "\uE00B",
+    'Escape' => "\uE00C",
+    'Space' => "U+E00D",
+    'PageUp' => "\uE00E",
+    'PageDown' => "\uE00F",
+    'End' => "\uE010",
+    'Home' => "\uE011",
+    'LeftArrow' => "\uE012",
+    'UpArrow' => "\uE013",
+    'RightArrow' => "\uE014",
+    'DownArrow' => "\uE015",
+    'Insert' => "\uE016",
+    'Delete' => "\uE017",
+    'Semicolon' => "\uE018",
+    'Equals' => "\uE019",
+    'Numpad0' => "\uE01A",
+    'Numpad1' => "\uE01B",
+    'Numpad2' => "\uE01C",
+    'Numpad3' => "\uE01D",
+    'Numpad4' => "\uE01E",
+    'Numpad5' => "\uE01F",
+    'Numpad6' => "\uE020",
+    'Numpad7' => "\uE021",
+    'Numpad8' => "\uE022",
+    'Numpad9' => "\uE023",
+    'Multiply' => "\uE024",
+    'Add' => "\uE025",
+    'Separator' => "\uE026",
+    'Subtract' => "\uE027",
+    'Decimal' => "\uE028",
+    'Divide' => "\uE029",
+    'F1' => "\uE031",
+    'F2' => "\uE032",
+    'F3' => "\uE033",
+    'F4' => "\uE034",
+    'F5' => "\uE035",
+    'F6' => "\uE036",
+    'F7' => "\uE037",
+    'F8' => "\uE038",
+    'F9' => "\uE039",
+    'F10' => "\uE03A",
+    'F11' => "\uE03B",
+    'F12' => "\uE03C",
+    'Command' => "\uE03D",
+    'Meta' => "\uE03D",
+  );
+
+
+    $element = $this->get_element($using, $value);
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/value';
+	$data = array( "value" => array($keys[$key]) );
+	$data = json_encode($data);	
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response);
+
+}
 
 
 

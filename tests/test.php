@@ -3,7 +3,7 @@
 require("../lib/BoostBase.php");
 
 //arguments are optional for constructor. 
-$session = new Boost("http://127.0.0.1:4444/wd/hub", "firefox"); 
+$session = new Boost(); 
 
 //must contains HTTP protocol. 
 $session->set_url("http://www.shutterstock.com"); 
@@ -50,23 +50,25 @@ sleep(2);
 
 //$array = $session->get_elements("tag name", "a");
 
-//$element = $session->get_element("id", "index_keyword_submit" );
+//$element = $session->get_element("link text", "SIGN IN" );
 
-$session->click( null, "id", "index_keyword_submit" );
+$session->click( "link text", "SIGN IN" );
 
+
+//echo $session->get_text("id", "logo_container");
 
 
 sleep(3);
 
 //$session->click($element);
 
+//sleep(3);
 
 //Can take an optional $WINDOW_HANDLE parameter otherwise it uses "current"
 
 //$session->set_window_position(300, 400);
 
 //$array = $session->get_window_position();
-
 
 //$session->window_maximize();
 
@@ -85,11 +87,14 @@ sleep(3);
 //$session->submit($element);
 
 //$session->get_text($element);
+//$session->get_text("id", "logo_container");
 
 //$session->type("testing....");
 
 
+$session->send_key("name", "user", "space");
 
+sleep(3);
 
 
 
