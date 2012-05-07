@@ -91,8 +91,23 @@ sleep(3);
 
 //$session->type("testing....");
 
+// TODO: special keys support
+//$session->send_key("name", "user", "numpad3");
 
-$session->send_key("name", "user", "space");
+$element = $session->get_element("name", "user");
+
+// $session->get_tag($element);
+
+//$session->clear($element);
+
+//$session->is_selected($element);
+
+//$session->is_enabled($element);
+
+//$session->get_attribute($element, "type");
+
+
+
 
 sleep(3);
 

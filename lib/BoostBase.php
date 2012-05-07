@@ -427,6 +427,7 @@ public function get_text( ){
 
 ///////////////////////////////////////////////////SEND KEYS//////////////////////////////////////////////
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/keys
 public function type($text){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/keys';
@@ -436,7 +437,7 @@ public function type($text){
 	return Boost::jsonParse($response);
 }
 
-
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/value
 public function send_key($using, $value, $key){
 
     $key = ucfirst(trim($key));
@@ -470,7 +471,7 @@ public function send_key($using, $value, $key){
     'Numpad0' => "\uE01A",
     'Numpad1' => "\uE01B",
     'Numpad2' => "\uE01C",
-    'Numpad3' => "\uE01D",
+    'Numpad3' => '\uE01D',
     'Numpad4' => "\uE01E",
     'Numpad5' => "\uE01F",
     'Numpad6' => "\uE020",
@@ -510,14 +511,48 @@ public function send_key($using, $value, $key){
 }
 
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/name
+public function get_tag($element = null){
+    
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/name';
+	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	return Boost::jsonParse($response);
+}
+
+
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/clear/
+public function clear($element = null){
+
+    $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/clear';
+	$response = Boost:: curl("POST", $full_url, NULL, TRUE, FALSE);
+	return Boost::jsonParse($response);
+}
 
 
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/selected
+public function is_selected($element = null){
+ 
+    $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/selected';
+	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	return Boost::jsonParse($response);
+}
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/enabled
+public function is_enabled($element = null){
+ 
+    $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/enabled';
+	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	return Boost::jsonParse($response);
+}
 
-
-
-
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/attribute/:name
+public function get_attribute($element = null, $attribute = null){
+ 
+    $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/attribute/' . $attribute;
+	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	return Boost::jsonParse($response);
+}
 
 
 
