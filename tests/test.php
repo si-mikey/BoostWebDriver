@@ -96,7 +96,7 @@ sleep(3);
 
 $element = $session->get_element("name", "user");
 
-// $session->get_tag($element);
+//$session->get_tag($element);
 
 //$session->clear($element);
 

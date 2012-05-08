@@ -25,7 +25,7 @@ $session->click($element);
 
 //Another way to click on an element;
 //this fetches the $element within the click method and clicks it directly.
-$session->click(null, "id", "index_keyword_submit");
+$session->click("id", "index_keyword_submit");
 
 sleep(3);
 
