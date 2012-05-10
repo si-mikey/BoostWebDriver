@@ -529,7 +529,6 @@ public function clear($element = null){
 }
 
 
-
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/selected
 public function is_selected($element = null){
  
@@ -555,9 +554,13 @@ public function get_attribute($element = null, $attribute = null){
 }
 
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/equals/:other
+public function is_equal($element1, $element2){
+    
 
 
 
+}
 
 
 
