@@ -106,7 +106,9 @@ $element = $session->get_element("name", "user");
 
 //$session->get_attribute($element, "type");
 
+$element2 = get_element("id", "index_keyword_input");
 
+echo $session->is_equal($element, $element2);
 
 
 sleep(3);

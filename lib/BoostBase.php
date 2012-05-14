@@ -556,10 +556,10 @@ public function get_attribute($element = null, $attribute = null){
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/equals/:other
 public function is_equal($element1, $element2){
-    
-
-
-
+     
+    $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element1 . '/equals/' . $element2;
+	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+    return Boost::jsonParse($response);
 }
 
 
