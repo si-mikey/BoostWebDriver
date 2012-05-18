@@ -7,7 +7,7 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-require ("C:\BoostWebDriver\lib\BoostBase.php");
+require ("C:\\BoostWebDriver\\lib\\BoostBase.php");
 
 /**
  * Features context.
@@ -21,13 +21,11 @@ class FeatureContext extends BehatContext
      * @param   array   $parameters     context parameters (set them up through behat.yml)
      */
     
-    public $session;
 
     public function __construct(array $parameters)
     {
         // Initialize your context here
-        
-     $session->session = new Boost();
+        $this->useContext('boostContext', new Boost());
 
     }
 
@@ -38,15 +36,9 @@ class FeatureContext extends BehatContext
    */
   public function iAmLoggedInToShutterstock()
   {
-     
-     
-	 $session->set_url("http://www.shutterstock.com");
-     $session->click(null, "link text", "SIGN IN"); 
-     $session->type("");
-     $session->click(null, 'id', 'pass');
-     $session->type("");
-     $session->click(null, 'name', 'submit');
-     sleep(5);
+      //$session = new Boost();
+      //
+    	$this->getMainContext()->getSubcontext('boostContext')->set_url("http://www.shutterstock.com");
   }
 
   /**
@@ -55,9 +47,10 @@ class FeatureContext extends BehatContext
   public function iClickOn($link)
   {
      
-    $session->click(null, "partial link text", "Hi,");
-    slee(2);
-    $link = $session->click(null, "id", "user_account");
+    $session->click("partial link text", "Hi,");
+    sleep(2);
+
+    $link = $session->click("id", "user_account");
     sleep(3);
   }
 

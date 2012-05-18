@@ -7,6 +7,7 @@ $session = new Boost();
 
 //must contains HTTP protocol. 
 $session->set_url("http://www.shutterstock.com"); 
+$session->window_maximize();
 
 //adding wait statement in following release
 sleep(2);
@@ -52,13 +53,44 @@ sleep(2);
 
 //$element = $session->get_element("link text", "SIGN IN" );
 
-$session->click( "link text", "SIGN IN" );
+//$session->click( "link text", "SIGN IN" );
 
 
 //echo $session->get_text("id", "logo_container");
 
 
-sleep(3);
+//sleep(2);
+
+//$session->type("");
+
+
+//$session->click("name", "pass");
+
+//$session->type("testing");
+
+//$session->click("name", "submit");
+
+
+//sleep(2);
+
+
+//$session->click("id", "keyword_input");
+
+//$session->type("cool cars");
+
+//$session->click("id", "main_search_button");
+
+
+//sleep(2);
+
+
+//$session->click("partial link text", "Hi,");
+
+//sleep(1);
+
+//$session->click("id", "user_account");
+
+//sleep(2);
 
 //$session->click($element);
 
@@ -94,7 +126,7 @@ sleep(3);
 // TODO: special keys support
 //$session->send_key("name", "user", "numpad3");
 
-$element = $session->get_element("name", "user");
+//$element = $session->get_element("name", "user");
 
 //$session->get_tag($element);
 
@@ -106,14 +138,14 @@ $element = $session->get_element("name", "user");
 
 //$session->get_attribute($element, "type");
 
-$element2 = get_element("id", "index_keyword_input");
+$element2 = $session->get_element("name", "search_group");
 
-echo $session->is_equal($element, $element2);
-
-
-sleep(3);
+//echo $session->is_equal($element, $element2);
 
 
+//sleep(3);
+
+echo $session->is_displayed($element2);
 
 
 

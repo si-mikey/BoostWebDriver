@@ -59,7 +59,7 @@ public static function jsonParse($json, $key = null){
 	//print_r($value);
 	
 
-	if( $value['status'] != 0 && $value['status'] ){
+	if( $value['status'] !== 0 && isset($value['status']) ){
 		
 		preg_match("/(.*)\n/", $value['value']['message'], $error);		
 
@@ -67,17 +67,19 @@ public static function jsonParse($json, $key = null){
 			echo $error[0];
 			exit;
 		}else{
-			echo "Unknown Error.";
+			echo "Unknown Error. Unable to parse error data";
 			exit;
 		}
 	}
-		if($key !== null){
+		if($key !== null && isset($value['value'])){
 			
 			return $value["value"]["$key"];		
 		}else{
 			
-			return $value['value'];
-		} 
+            if($value['value'] === false) return "false";
+            if($value['value'] === true) return "true";
+                
+    	} 
 
 	
 }		
@@ -561,6 +563,19 @@ public function is_equal($element1, $element2){
 	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
     return Boost::jsonParse($response);
 }
+
+
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/displayed
+public function is_displayed($element){
+
+    $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/displayed';
+    $response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+    return Boost::jsonParse($response);
+}
+
+
+
+
 
 
 
