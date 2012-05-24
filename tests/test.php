@@ -1,6 +1,6 @@
 <?php
 
-require("../lib/BoostBase.php");
+require("c:\\BoostWebDriver\\lib\\BoostBase.php");
 
 //arguments are optional for constructor. 
 $session = new Boost(); 
@@ -59,7 +59,7 @@ sleep(2);
 //echo $session->get_text("id", "logo_container");
 
 
-//sleep(2);
+sleep(2);
 
 //$session->type("");
 
@@ -69,7 +69,6 @@ sleep(2);
 //$session->type("testing");
 
 //$session->click("name", "submit");
-
 
 //sleep(2);
 
@@ -138,20 +137,19 @@ sleep(2);
 
 //$session->get_attribute($element, "type");
 
-$element2 = $session->get_element("name", "search_group");
+$element2 = $session->get_element("id", "logo_container");
 
 //echo $session->is_equal($element, $element2);
 
 
 //sleep(3);
 
-echo $session->is_displayed($element2);
+//echo $session->is_displayed($element2);
+
+//$array = $session->get_location($element2);
 
 
-
-
-
-
+//$array = $session->get_location_in_view($element2);
 
 
 
