@@ -137,7 +137,7 @@ sleep(2);
 
 //$session->get_attribute($element, "type");
 
-$element2 = $session->get_element("id", "logo_container");
+//$element2 = $session->get_element("id", "logo_container");
 
 //echo $session->is_equal($element, $element2);
 
@@ -151,12 +151,13 @@ $element2 = $session->get_element("id", "logo_container");
 
 //$array = $session->get_location_in_view($element2);
 
+//$array = $session->get_size($element2);
 
+//$session->get_css($element2, "z-index");
 
+//$session->get_css("id", "logo_container", "z-index");
 
-
-
-
+//$session->get_orientation();
 
 
 

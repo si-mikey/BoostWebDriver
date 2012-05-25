@@ -60,6 +60,7 @@ public static function jsonParse($json, $key = null){
 	//TODO: ADD RESPONSE STATUS CODES
 
 	//print_r($value);
+	return $value['status'];
 	
 
 	if( $value['status'] !== 0 && $value['status'] ){
@@ -507,7 +508,7 @@ public function send_key($using, $value, $key){
   );
 
 
-    $element = $this->get_element($using, $value);
+   	$element = $this->get_element($using, $value);
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/value';
 	$data = array( "value" => array($keys[$key]) );
 	$data = json_encode($data);	
@@ -521,7 +522,7 @@ public function send_key($using, $value, $key){
 public function get_tag($element = null){
     
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/name';
-	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);
 }
 
@@ -530,7 +531,7 @@ public function get_tag($element = null){
 public function clear($element = null){
 
    	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/clear';
-	$response = Boost:: curl("POST", $full_url, NULL, TRUE, FALSE);
+	$response = Boost:: curl("POST", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);
 }
 
@@ -539,7 +540,7 @@ public function clear($element = null){
 public function is_selected($element = null){
  
    	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/selected';
-	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);
 }
 
@@ -547,7 +548,7 @@ public function is_selected($element = null){
 public function is_enabled($element = null){
  
     	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/enabled';
-	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);
 }
 
@@ -555,7 +556,7 @@ public function is_enabled($element = null){
 public function get_attribute($element = null, $attribute = null){
  
    	 $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/attribute/' . $attribute;
-	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
 	return Boost::jsonParse($response);
 }
 
@@ -564,7 +565,7 @@ public function get_attribute($element = null, $attribute = null){
 public function is_equal($element1, $element2){
      
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element1 . '/equals/' . $element2;
-	$response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
     return Boost::jsonParse($response);
 }
 
@@ -573,7 +574,7 @@ public function is_equal($element1, $element2){
 public function is_displayed($element = null){
 
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/displayed';
-    $response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+    $response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
     return Boost::jsonParse($response);
 }
 
@@ -581,16 +582,75 @@ public function is_displayed($element = null){
 public function get_location($element = null){
     
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/location';
-    $response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+    $response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
     return Boost::jsonParse($response);
 }
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location_in_view
 public function get_location_in_view($element = null){
     
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/location_in_view';
-    $response = Boost:: curl("GET", $full_url, NULL, TRUE, FALSE);
+    $response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
     return Boost::jsonParse($response);
 }
+
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/size
+public function get_size($element = null){
+    
+    $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/size';
+    $response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
+    return Boost::jsonParse($response);
+}
+
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/css/:propertyName
+public function get_css(){
+
+     if( func_num_args() == 3 ){
+        
+	$using = func_get_arg(0);
+	$value = func_get_arg(1);
+	$element = $this->get_element($using, $value);
+	$propertyName = func_get_arg(2);
+		
+    }else if( func_num_args() == 2){
+        
+	$element = func_get_arg(0);
+	$propertyName = func_get_arg(1); 
+    }        
+
+
+
+    $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/css/' . $propertyName;
+    $response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
+    return Boost::jsonParse($response);
+}
+
+
+//MOBILE methods
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/orientation
+public function get_orientation(){
+	
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/orientation';
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
+	return Boost::jsonParse($response);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
