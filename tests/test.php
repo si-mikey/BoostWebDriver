@@ -6,8 +6,8 @@ require("c:\\BoostWebDriver\\lib\\BoostBase.php");
 $session = new Boost(); 
 
 //must contains HTTP protocol. 
-$session->set_url("http://www.shutterstock.com"); 
-$session->window_maximize();
+$session->set_url("http://localhost/alert.html"); 
+//$session->window_maximize();
 
 //adding wait statement in following release
 sleep(2);
@@ -159,8 +159,13 @@ sleep(2);
 
 //$session->get_orientation();
 
+sleep(3);
+//$session->get_alert_text();
+
+$session->set_alert_text("LOL tpying...");
 
 
 
+sleep(3);
 
 ?>

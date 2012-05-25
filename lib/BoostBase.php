@@ -60,7 +60,7 @@ public static function jsonParse($json, $key = null){
 	//TODO: ADD RESPONSE STATUS CODES
 
 	//print_r($value);
-	return $value['status'];
+//	return $value['status'];
 	
 
 	if( $value['status'] !== 0 && $value['status'] ){
@@ -635,9 +635,24 @@ public function get_orientation(){
 	return Boost::jsonParse($response);
 }
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/alert_text
+public function get_alert_text(){
+
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/alert_text';
+	$response = Boost:: curl("GET", $full_url, NULL, FALSE, FALSE);
+	return Boost::jsonParse($response);
+}
 
 
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/alert_text
+public function set_alert_text($text){
 
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/alert_text';
+	$data = array("text"=>$text);
+	$data = json_encode($data);
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response);
+}
 
 
 
