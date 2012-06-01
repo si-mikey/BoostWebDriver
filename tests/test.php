@@ -1,15 +1,13 @@
 <?php
 
-//require("c:\\BoostWebDriver\\lib\\BoostBase.php");
-
-require("../lib/BoostBase.php");
+require("c:\\BoostWebDriver\\lib\\BoostBase.php");
 
 //arguments are optional for constructor. 
 $session = new Boost(); 
 
 //must contains HTTP protocol. 
-$session->set_url("http://www.shutterstock.com"); 
-$session->window_maximize();
+$session->set_url("http://localhost/alert.html"); 
+//$session->window_maximize();
 
 //adding wait statement in following release
 sleep(2);
@@ -75,11 +73,11 @@ sleep(2);
 //sleep(2);
 
 
-$session->click("id", "keyword_input");
+//$session->click("id", "keyword_input");
 
-$session->type("cool cars");
+//$session->type("cool cars");
 
-$session->click("id", "main_search_button");
+//$session->click("id", "main_search_button");
 
 
 //sleep(2);
@@ -165,10 +163,6 @@ sleep(3);
 //$session->get_alert_text();
 
 //$session->set_alert_text("LOL tpying...");
-<<<<<<< HEAD
-=======
-
->>>>>>> 7f087c8b1b4ec99e7f5c7de5ac138969beb0c7f8
 
 echo $session->accept_alert();
 
