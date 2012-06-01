@@ -654,10 +654,13 @@ public function set_alert_text($text){
 	return Boost::jsonParse($response);
 }
 
+//
+public function accept_alert(){
 
-
-
-
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/accept_alert';
+	$response = Boost:: curl("POST", $full_url, NULL, FALSE, FALSE);
+	return Boost::jsonParse($response);
+}
 
 
 

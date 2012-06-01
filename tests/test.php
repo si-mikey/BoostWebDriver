@@ -162,9 +162,9 @@ sleep(2);
 sleep(3);
 //$session->get_alert_text();
 
-$session->set_alert_text("LOL tpying...");
+//$session->set_alert_text("LOL tpying...");
 
-
+echo $session->accept_alert();
 
 sleep(3);
 
