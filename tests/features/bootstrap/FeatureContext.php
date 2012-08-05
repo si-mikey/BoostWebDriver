@@ -25,18 +25,18 @@ class FeatureContext extends BehatContext
     public function __construct(array $parameters)
     {
         // Initialize your context here
-        //$this->useContext('boostContext', new Boost());
-
+	$this->useContext('Booster', new Boost());
     }
 
-	
+
+
 	
   /**
    * @Given /^I am logged in to shutterstock$/
    */
   public function iAmLoggedInToShutterstock()
   {
-		$session = new Boost();
+	$imdoing = "it";	
       //
     	//$this->getMainContext()->getSubcontext('boostContext')->set_url("http://www.shutterstock.com");
   }
@@ -47,7 +47,7 @@ class FeatureContext extends BehatContext
   public function iClickOn($link)
   {
      
-    //$session->click("partial link text", "Hi,");
+    $this->click("partial link text", "Hi,");
     //sleep(2);
 
     $link = "true";

@@ -48,4 +48,4 @@ Note:
 
 ### License
 
-BoostWebDriver by Luis Lopez is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License. Based on a work at github.com.
+BoostWebDriver by Luis Lopez is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License. 
