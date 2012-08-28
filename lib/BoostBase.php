@@ -213,6 +213,23 @@ public function refresh(){
 }
 
 
+
+
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/execute
+public function js_execute($script, $args){
+
+	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/execute';
+	$data = array( "script"=>$script );
+	$data = json_encode($data);	
+	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
+	return Boost::jsonParse($response);		
+
+
+}
+
+
+
+
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/screenshot
 public function screenshot(){
 	
