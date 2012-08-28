@@ -41,7 +41,6 @@ public static function curl($http, $curl_url, $data = null, $encode_data = TRUE,
 	if( $http === "POST" && $encode_data === TRUE && $data !== NULL ) curl_setopt( $ch, CURLOPT_POSTFIELDS, "$data" );
 	if( $show_header === TRUE  ) curl_setopt( $ch, CURLOPT_HEADER, TRUE );
 	
-//	print_r(debug_backtrace());	
 	return $result = curl_exec($ch);
 
 
@@ -654,7 +653,8 @@ public function set_alert_text($text){
 	return Boost::jsonParse($response);
 }
 
-//
+//http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/accept_alert
+
 public function accept_alert(){
 
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/accept_alert';
@@ -673,5 +673,10 @@ public function accept_alert(){
 
 
 }
+
+
+
+
+
 
 ?>

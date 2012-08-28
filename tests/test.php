@@ -6,8 +6,9 @@ require("c:\\BoostWebDriver\\lib\\BoostBase.php");
 $session = new Boost(); 
 
 //must contains HTTP protocol. 
-$session->set_url("http://localhost/alert.html"); 
-//$session->window_maximize();
+$session->set_url("http://www.shutterstock.com"); 
+
+$session->window_maximize();
 
 //adding wait statement in following release
 sleep(2);
@@ -53,7 +54,7 @@ sleep(2);
 
 //$element = $session->get_element("link text", "SIGN IN" );
 
-//$session->click( "link text", "SIGN IN" );
+$session->click( "link text", "SIGN IN" );
 
 
 //echo $session->get_text("id", "logo_container");
@@ -164,8 +165,8 @@ sleep(3);
 
 //$session->set_alert_text("LOL tpying...");
 
-echo $session->accept_alert();
+//echo $session->accept_alert();
 
-sleep(3);
+//sleep(3);
 
 ?>
