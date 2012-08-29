@@ -37,6 +37,12 @@ sleep(2);
 
 //$session->refresh();
 
+
+$session->js_execute("alert('testingjs')", "");
+
+
+sleep(5);
+
 //$session->screenshot();
 
 //$array = $session->set_frame_focus();
@@ -54,13 +60,13 @@ sleep(2);
 
 //$element = $session->get_element("link text", "SIGN IN" );
 
-$session->click( "link text", "SIGN IN" );
+//$session->click( "link text", "SIGN IN" );
 
 
 //echo $session->get_text("id", "logo_container");
 
 
-sleep(2);
+//sleep(2);
 
 //$session->type("");
 
@@ -160,7 +166,7 @@ sleep(2);
 
 //$session->get_orientation();
 
-sleep(3);
+//sleep(3);
 //$session->get_alert_text();
 
 //$session->set_alert_text("LOL tpying...");
