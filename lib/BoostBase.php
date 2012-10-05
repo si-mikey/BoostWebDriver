@@ -2,32 +2,40 @@
 class Boost{
 
 protected $session_id;
-protected $webdriver_url;
+public $webdriver_url;
 
 public function __construct($webdriver_url = null, $capability = null){
 
-	if($webdriver_url === null) {$webdriver_url = "http://127.0.0.1:4444/wd/hub";}	
-	$this->webdriver_url = trim($webdriver_url);
+//use provided WebDriver server or use default location 
+($webdriver_url === null) ? $this->webdriver_url = "http://127.0.0.1:4444/wd/hub" : $this->webdriver_url = trim($webdriver_url);
 
-    if( $capability === null ) {$capability = "firefox";}
+//capability can be an array of a server's capability or only pass the desired browser
+if( $capability === null ) {$capability = "firefox";}
 
-	//Validate browser or capability
-	if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" ) { $capabilities["browserName"] = $capability;
-	}else{ throw new Exception("Provided  browser is not supported");	}
+//Validate browser or capability
+if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" || $capability === "ie" ){
+	 
+	$capabilities["browserName"] = $capability; 
+
+}else{
 	
-	$json = array("desiredCapabilities" => $capabilities);	
+	throw new Exception("Provided browser is not supported");
+
+}
 	
-	 $output = Boost::curl("POST", $this->webdriver_url . '/session', json_encode($json), TRUE, TRUE);
+$json = array("desiredCapabilities" => $capabilities);	
+	
+$output = Boost::curl("POST", $this->webdriver_url . '/session', json_encode($json), TRUE, TRUE);
 
- 	preg_match("/session\/(.*)\n/", $output, $sess);
+preg_match("/session\/(.*)\n/", $output, $sess);
 
-		if( isset($sess[1]) ){
+if( isset($sess[1]) ){
 
-		$this->session_id = trim($sess[1]);
-		}else{
+	$this->session_id = trim($sess[1]);
+}else{
 
-		throw new Exception("Did not receive a session id, wrong server URL or port");
-		}  
+	throw new Exception("Did not receive a session id, wrong server URL or port");
+}  
  
 }
 
@@ -48,8 +56,7 @@ public static function curl($http, $curl_url, $data = null, $encode_data = TRUE,
 
 public function __destruct(){
 	
-	Boost::curl("DELETE", $this->webdriver_url . '/session/' . $this->session_id);
-	//unset($this); 
+//	Boost::curl("DELETE", $this->webdriver_url . '/session/' . $this->session_id);
 }
 
 
