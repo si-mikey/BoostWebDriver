@@ -2,16 +2,18 @@
 
 require("c:\\BoostWebDriver\\lib\\BoostBase.php");
 
+
+
 //arguments are optional for constructor. 
-$session = new Boost(); 
+$session = new Boost("http://localhost:9515", "chrome"); 
 
 //must contains HTTP protocol. 
-$session->set_url("http://www.shutterstock.com"); 
+$session->set_url(""); 
 
 $session->window_maximize();
 
 //adding wait statement in following release
-sleep(2);
+//sleep(2);
 
 //$session->get_url();
 
@@ -38,7 +40,9 @@ sleep(2);
 //$session->refresh();
 
 
-$session->js_execute("alert('testingjs')", "");
+$css_val = $session->js_execute('return document.defaultView.getComputedStyle(document.getElementsByTagName("body")[0], "").getPropertyValue("font-family")', "");
+
+var_dump( $css_val );
 
 
 sleep(5);
@@ -162,8 +166,11 @@ sleep(5);
 
 //$session->get_css($element2, "z-index");
 
-//$session->get_css("id", "logo_container", "z-index");
+//$css = $session->get_css("id", "headings", "font-family");
 
+//echo $css;
+
+//sleep(5);
 //$session->get_orientation();
 
 //sleep(3);

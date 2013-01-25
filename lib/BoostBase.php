@@ -24,6 +24,7 @@ public function __construct($webdriver_url = null, $capability = null){
 		if( isset($sess[1]) ){
 
 		$this->session_id = trim($sess[1]);
+		
 		}else{
 
 		throw new Exception("Did not receive a session id, wrong server URL or port");
@@ -49,7 +50,6 @@ public static function curl($http, $curl_url, $data = null, $encode_data = TRUE,
 public function __destruct(){
 	
 	Boost::curl("DELETE", $this->webdriver_url . '/session/' . $this->session_id);
-	//unset($this); 
 }
 
 
@@ -70,7 +70,7 @@ public static function jsonParse($json, $key = null){
 			echo $error[0];
 			exit;
 		}else{
-			echo "Unknown Error. Unable to parse error data";
+			echo "Unknown Error. Raw output=> " . $value['value']['message'];
 			exit;
 		}
 	}
