@@ -1,15 +1,16 @@
 <?php
 class Boost{
 
-protected $session_id;
-protected $webdriver_url;
+public $session_id;
+public $webdriver_url;
 
 public function __construct($webdriver_url = null, $capability = null){
 
 	if($webdriver_url === null) {$webdriver_url = "http://127.0.0.1:4444/wd/hub";}	
+
 	$this->webdriver_url = trim($webdriver_url);
 
-    if( $capability === null ) {$capability = "firefox";}
+    	if( $capability === null ) {$capability = "firefox";}
 
 	//Validate browser or capability
 	if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" ) { $capabilities["browserName"] = $capability;
@@ -17,7 +18,7 @@ public function __construct($webdriver_url = null, $capability = null){
 	
 	$json = array("desiredCapabilities" => $capabilities);	
 	
-	 $output = Boost::curl("POST", $this->webdriver_url . '/session', json_encode($json), TRUE, TRUE);
+	$output = Boost::curl("POST", $this->webdriver_url . '/session', json_encode($json), TRUE, TRUE);
 
  	preg_match("/session\/(.*)\n/", $output, $sess);
 
@@ -27,8 +28,9 @@ public function __construct($webdriver_url = null, $capability = null){
 		
 		}else{
 
-		throw new Exception("Did not receive a session id, wrong server URL or port");
-		}  
+		throw new Exception("Did not receive a session id, check server URL or port");
+	
+	}  
  
 }
 
