@@ -10,15 +10,16 @@ $session->start("firefox");
 //must contains HTTP protocol. 
 $session->set_url("http://www.qa.shutterstock.com/"); 
 
-$session->window_maximize();
+$session->set_frame_focus("");
 
-sleep(3);
+//$session->window_maximize();
+
 //adding wait statement in following release
 //sleep(2);
 
 //$session->get_url();
 
-//$session->kill(); 
+$session->kill(); 
 
 //$array = $session->get_status();
 

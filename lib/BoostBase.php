@@ -60,11 +60,11 @@ public function start( $capability = null ){
 public static function curl($http, $curl_url, $data = null, $encode_data = TRUE, $show_header = FALSE){
 
 	$ch = curl_init($curl_url);
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "$http");
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http);
 	curl_setopt($ch, CURLOPT_HTTPHEADER,array("Expect:"));	
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);   
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json;charset=UTF-8', 'Accept: application/json'));	
-	if( $http === "POST" && $encode_data === TRUE && $data !== NULL ) curl_setopt( $ch, CURLOPT_POSTFIELDS, "$data" );
+	if( $http === "POST" && $encode_data === TRUE && $data !== NULL ) curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
 	if( $show_header === TRUE  ) curl_setopt( $ch, CURLOPT_HEADER, TRUE );
 	
 	return $result = curl_exec($ch);
@@ -74,7 +74,7 @@ public static function curl($http, $curl_url, $data = null, $encode_data = TRUE,
 
 public function __destruct(){
 	
-	Boost::curl("DELETE", $this->webdriver_url . '/session/' . $this->session_id);
+//	Boost::curl("DELETE", $this->webdriver_url . '/session/' . $this->session_id);
 }
 
 
@@ -83,9 +83,13 @@ public static function jsonParse($json, $key = null){
 	$value = json_decode(trim($json), true);
 	//TODO: ADD RESPONSE STATUS CODES
 
-	//print_r($value);
+	print_r($value);
+	//var_dump($value);
 	//return $value['status'];
+
 	
+
+	exit();	
 
 	if( $value['status'] !== 0 && $value['status'] ){
 		
@@ -239,12 +243,10 @@ public function refresh(){
 
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/execute
-public function js_execute($script, $args){
+public function js_execute($script, $args=null){
 
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/execute';
-
 	$data = array( "script"=>"$script", "args"=>array() );
-
 	$data = json_encode($data);	
 	$response = Boost:: curl("POST", $full_url, $data, TRUE, FALSE);
 	return Boost::jsonParse($response);		
