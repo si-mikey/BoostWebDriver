@@ -1,34 +1,52 @@
 <?php
 class Boost{
 
-public $session_id;
-public $webdriver_url;
+private $session_id;
+private $webdriver_url;
 
 public function __construct($webdriver_url = null, $capability = null){
+	
+	//your local or which ever webdriver instance you want to connect to.
+	$remote_wd_url = "http://127.0.0.1:4444/wd/hub";
+	
+	//If no webdriver instance url was provided by the tests assume the above.
+	if($webdriver_url === null) {$webdriver_url = $remote_wd_url;}	
 
-	if($webdriver_url === null) {$webdriver_url = "http://127.0.0.1:4444/wd/hub";}	
-
+	//trim whitespace off the url as it causes errors trying to connect to webdriver.
 	$this->webdriver_url = trim($webdriver_url);
-
+	
+	//if no specific cababilities are required  assume firefox as default test browser
     	if( $capability === null ) {$capability = "firefox";}
+	
+	
+	//TODO: cheap way to check browers that webdriver supports, but there are a few missing like mobile devices 
+		if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" ) { 
+			
+			$capabilities["browserName"] = $capability;
 
-	//Validate browser or capability
-	if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" ) { $capabilities["browserName"] = $capability;
-	}else{ throw new Exception("Provided  browser is not supported");	}
+		}else{ 
 	
+			throw new Exception("Provided  browser is not supported");	
+		}
+
+	//Webdriver expects json data with capabitlies of how to behave
 	$json = array("desiredCapabilities" => $capabilities);	
-	
+
+	//Initiates a webdriver instance by posting to webdriver with the data above	
 	$output = Boost::curl("POST", $this->webdriver_url . '/session', json_encode($json), TRUE, TRUE);
 
- 	preg_match("/session\/(.*)\n/", $output, $sess);
-
-		if( isset($sess[1]) ){
-
-		$this->session_id = trim($sess[1]);
 		
-		}else{
+	//Regular expression lookup for a session ID match to know if webdriver was started correctly and store the id for future reference
+ 	preg_match("/session\/(.*)\n/", $output, $session);
 
-		throw new Exception("Did not receive a session id, check server URL or port");
+	//Check if the session id was provided by webdriver and assign it.
+	if( isset($session[1]) && !empty($session[1])  ){
+
+		$this->session_id = trim($session[1]);
+		
+	}else{
+
+		throw new Exception("Error: Did not receive a session id, check webdriver server URL or port");
 	
 	}  
  
@@ -61,7 +79,7 @@ public static function jsonParse($json, $key = null){
 	//TODO: ADD RESPONSE STATUS CODES
 
 	//print_r($value);
-//	return $value['status'];
+	//return $value['status'];
 	
 
 	if( $value['status'] !== 0 && $value['status'] ){
