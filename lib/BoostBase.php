@@ -4,7 +4,7 @@ class Boost{
 private $session_id;
 private $webdriver_url;
 
-public function __construct($webdriver_url = null, $capability = null){
+public function __construct( $webdriver_url = null ){
 	
 	//your local or which ever webdriver instance you want to connect to.
 	$remote_wd_url = "http://127.0.0.1:4444/wd/hub";
@@ -14,20 +14,24 @@ public function __construct($webdriver_url = null, $capability = null){
 
 	//trim whitespace off the url as it causes errors trying to connect to webdriver.
 	$this->webdriver_url = trim($webdriver_url);
-	
+
+	 
+}
+
+public function start( $capability = null ){
+
 	//if no specific cababilities are required  assume firefox as default test browser
-    	if( $capability === null ) {$capability = "firefox";}
-	
+    	if( $capability === null ) {$capability = "firefox";}	
 	
 	//TODO: cheap way to check browers that webdriver supports, but there are a few missing like mobile devices 
-		if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" ) { 
+	if( $capability === "firefox" || $capability === "chrome"  || $capability === "opera" || $capability === "safari" ) { 
 			
-			$capabilities["browserName"] = $capability;
+		$capabilities["browserName"] = $capability;
 
-		}else{ 
+	}else{ 
 	
-			throw new Exception("Provided  browser is not supported");	
-		}
+		throw new Exception("Provided  browser is not supported");	
+	}
 
 	//Webdriver expects json data with capabitlies of how to behave
 	$json = array("desiredCapabilities" => $capabilities);	
@@ -35,7 +39,6 @@ public function __construct($webdriver_url = null, $capability = null){
 	//Initiates a webdriver instance by posting to webdriver with the data above	
 	$output = Boost::curl("POST", $this->webdriver_url . '/session', json_encode($json), TRUE, TRUE);
 
-		
 	//Regular expression lookup for a session ID match to know if webdriver was started correctly and store the id for future reference
  	preg_match("/session\/(.*)\n/", $output, $session);
 
@@ -49,8 +52,10 @@ public function __construct($webdriver_url = null, $capability = null){
 		throw new Exception("Error: Did not receive a session id, check webdriver server URL or port");
 	
 	}  
- 
-}
+	
+
+}	
+
 
 public static function curl($http, $curl_url, $data = null, $encode_data = TRUE, $show_header = FALSE){
 

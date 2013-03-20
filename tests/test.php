@@ -2,10 +2,10 @@
 
 require("c:\\BoostWebDriver\\lib\\BoostBase.php");
 
-
-
 //arguments are optional for constructor. 
 $session = new Boost(); 
+
+$session->start("firefox");
 
 //must contains HTTP protocol. 
 $session->set_url("http://www.qa.shutterstock.com/"); 
