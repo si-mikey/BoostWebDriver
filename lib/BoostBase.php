@@ -83,9 +83,9 @@ public static function jsonParse($json, $key = null){
 	$value = json_decode(trim($json), true);
 	//TODO: ADD RESPONSE STATUS CODES
 
-	print_r($value);
+	//print_r($value);
 	//var_dump($value);
-	//return $value['status'];
+	print_r($value['status']);
 
 	
 

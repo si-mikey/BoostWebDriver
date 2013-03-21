@@ -19,7 +19,7 @@ $session->set_frame_focus("");
 
 //$session->get_url();
 
-$session->kill(); 
+//$session->kill(); 
 
 //$array = $session->get_status();
 
