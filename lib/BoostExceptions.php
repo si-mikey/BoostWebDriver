@@ -58,26 +58,35 @@ class TestException{
     function __construct($avalue = self::NOSUCHDRIVER) {
 
         switch ($avalue) {
-            case self::Success:
+            case self::NOSUCHDRIVER:
                 // throw custom exception
-                throw new MyException('1 is an invalid parameter', 5);
+                throw new MyException('A session is either terminated or not started', 6);
                 break;
 
-            case self::THROW_DEFAULT:
+            case self::NOSUCHELEMENT:
                 // throw default one.
                 throw new Exception('2 is not allowed as a parameter', 6);
                 break;
 
             default: 
                 // No exception, object will be created.
-
-
-                break;
+		break;
         }
     }
 }
 
+try{
 
+$test = new TestException();
+
+}catch(Exception $e){
+
+	echo $e->getMessage() . "\n";
+	echo $e->getCode() . "\n";
+	echo $e->getFile() . "\n";
+	echo $e->getLine() . "\n";
+	print_r( $e->getTrace() );
+}
 
 
 
