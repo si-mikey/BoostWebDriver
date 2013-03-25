@@ -85,7 +85,7 @@ public static function jsonParse($json, $key = null){
 	//print_r($value);
 	//var_dump($value);
 	//print_r($value['status']);
-	//exit();	
+	//	exit();	
 
 	if( $value['status'] !== 0 && $value['status'] ){
 		
