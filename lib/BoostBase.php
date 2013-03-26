@@ -1,8 +1,8 @@
 <?php
 
-require("BoostException.php");
+require_once("../vendor/KLogger/src/KLogger.php");
 
-class Boost extends RaiseException{
+class Boost{
 
 private $session_id;
 private $webdriver_url;
@@ -57,7 +57,8 @@ public function start( $capability = null ){
 	}  
 	
 
-}	
+}
+
 
 
 public static function curl($http, $curl_url, $data = null, $encode_data = TRUE, $show_header = FALSE){
@@ -70,10 +71,18 @@ public static function curl($http, $curl_url, $data = null, $encode_data = TRUE,
 	if( $http === "POST" && $encode_data === TRUE && $data !== NULL ) curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
 	if( $show_header === TRUE  ) curl_setopt( $ch, CURLOPT_HEADER, TRUE );
 	
-	return $result = curl_exec($ch);
+	$result = curl_exec($ch);
 
+	//instantiate logging
+	$klogger = KLogger::instance("../logs/", KLogger::DEBUG);
+	$klogger->logInfo($result);
+
+
+	return $result;
 
 }
+
+
 
 public function __destruct(){
 	
@@ -86,20 +95,11 @@ public static function jsonParse($json, $key = null){
 	$value = json_decode(trim($json), true);
 	//TODO: ADD RESPONSE STATUS CODES
 	//print_r($value);
-	//var_dump($value);
-	//print_r($value['status']);
-	//	exit();	
+	//exit();
 
 	if( $value['status'] !== 0 && isset($value['status']) && $key == null ){
 		
-		try{
-			new RaiseException($value['status']);
-
-		}catch(Exception $e){
-
-			echo "\n Error Message: " . $e->getMessage() . "\n"; 
-		}
-
+		echo $value['value']['message'];	
 
 	}
 
