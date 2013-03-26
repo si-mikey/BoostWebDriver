@@ -14,14 +14,16 @@ $session->set_url("http://www.qa.shutterstock.com/");
 
 $session->window_maximize();
 
+$session->get_url();
+
 //adding wait statement in following release
 //sleep(2);
 
 //$session->get_url();
 
-//$session->kill(); 
+$session->kill(); 
 
-$array = $session->get_status();
+//$array = $session->get_status();
 
 //$array = $session->get_sessions();
 

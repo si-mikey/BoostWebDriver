@@ -75,7 +75,7 @@ public static function curl($http, $curl_url, $data = null, $encode_data = TRUE,
 
 	//instantiate logging
 	$klogger = KLogger::instance("../logs/", KLogger::DEBUG);
-	$klogger->logInfo($result);
+	$klogger->logInfo(serialize($result));
 
 
 	return $result;
