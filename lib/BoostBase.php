@@ -1,5 +1,8 @@
 <?php
-class Boost{
+
+require("BoostException.php");
+
+class Boost extends RaiseException{
 
 private $session_id;
 private $webdriver_url;
@@ -49,7 +52,7 @@ public function start( $capability = null ){
 		
 	}else{
 
-		throw new Exception("Error: Did not receive a session id, check webdriver server URL or port");
+		throw new Exception("Error: Did not receive a session id, is webdriver running?");
 	
 	}  
 	
@@ -87,18 +90,22 @@ public static function jsonParse($json, $key = null){
 	//print_r($value['status']);
 	//	exit();	
 
-	if( $value['status'] !== 0 && $value['status'] ){
+	if( $value['status'] !== 0 && isset($value['status']) && $key == null ){
 		
-		preg_match("/(.*)\n/", $value['value']['message'], $error);		
+		try{
+			new RaiseException($value['status']);
 
-		if( $error ){
-			echo $error[0];
-			exit;
-		}else{
-			echo "Unknown Error. Raw output=> " . $value['value']['message'];
-			exit;
+		}catch(Exception $e){
+
+			echo "\n Error Message: " . $e->getMessage() . "\n"; 
 		}
+
+
 	}
+
+
+
+	//TODO
 		if($key !== null && $value['value']){
 			
 			return $value["value"]["$key"];		
