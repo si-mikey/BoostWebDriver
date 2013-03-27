@@ -9,8 +9,10 @@ Instructions:
 require("../lib/BoostBase.php");
 
 //arguments are optional for constructor. 
-//Will choose defaults [Location: http://127.0.0.1:4444/wd/hub, Browser : Firefox]
 $session = new Boost(); 
+
+//Will choose defaults [Location: http://127.0.0.1:4444/wd/hub, Browser : Firefox]
+$session->start();
 
 //must contains HTTP protocol. 
 $session->set_url("http://www.shutterstock.com"); 
@@ -35,16 +37,14 @@ $session->kill();
 ```
 Note:
 =====
-1. For reporting options you can use PHPUnit
-
-
+1. For reporting options you can use PHPUnit or Behat(recommended)
 
 
 ### TODO:
 
-1. add phpunit option for assertions
-2. complete JWP command list integration
-3. improve code
+1. complete JWP command list integration
+2. improve code
+3. improve klogger integration for logging test requests to webdriver in realtime. Uses flatfile for now, moving to zeromq or rabbitmq for pub sub in near future
 
 ### License
 
