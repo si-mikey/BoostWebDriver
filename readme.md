@@ -8,10 +8,10 @@ Instructions:
 
 require("../lib/BoostBase.php");
 
-//arguments are optional for constructor. 
+//Arg is optional for constructor. Arg is Remote WD instance
 $session = new Boost(); 
 
-//Will choose defaults [Location: http://127.0.0.1:4444/wd/hub, Browser : Firefox]
+//Args are capabilities for WD but Will choose defaults [Browser : Firefox]
 $session->start();
 
 //must contains HTTP protocol. 
