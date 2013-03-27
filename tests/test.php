@@ -20,7 +20,7 @@ $session->get_url();
 //sleep(2);
 
 //$session->get_url();
-sleep(3);
+//sleep(3);
 
 $session->kill(); 
 

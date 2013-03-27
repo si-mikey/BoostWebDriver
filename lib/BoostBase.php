@@ -80,7 +80,7 @@ public function curl($http, $curl_url, $data = null, $encode_data = TRUE, $show_
 	
 	$backtrace = debug_backtrace();
 	
-	($data != null) ? $this->logger->logInfo("Perfomed " . $backtrace[1]['function']. " on $data") : $this->logger->logInfo("Perform " . $backtrace[1]['function']);
+	($data != null) ? $this->logger->logInfo("Perfomed " . $backtrace[1]['function']. " on $data") : $this->logger->logInfo("Performed " . $backtrace[1]['function']);
 
 	return $result;
 
@@ -102,7 +102,8 @@ public static function jsonParse($json, $key = null){
 
 	if( $value['status'] !== 0 && isset($value['status']) && $key == null ){
 		
-		echo $value['value']['message'];	
+		echo $value['value']['message'];
+		$this->logger->logWarn($value['value']['message']);
 
 	}
 
