@@ -83,7 +83,7 @@ public function curl($http, $curl_url, $data = null, $encode_data = TRUE, $show_
 
 	$calling_function = $backtrace[1]['function'];
 	
-	($data != null) ? $this->logger->logInfo("Perfomed " . $calling_function . " on $data") : $this->logger->logInfo("Performed " . $calling_function);
+	($data != null) ? $this->logger->logInfo("Performed " . $calling_function . " on $data") : $this->logger->logInfo("Performed " . $calling_function);
 
 	return $result;
 
