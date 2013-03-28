@@ -23,8 +23,6 @@ public function __construct( $webdriver_url = null ){
 	$log_path = basename(__FILE__ . '/../logs/');
 	$this->logger = new KLogger($log_path, KLogger::DEBUG);
 	$this->logger->logInfo('---------------Session Started------------------');
-	
-
 	 
 }
 
