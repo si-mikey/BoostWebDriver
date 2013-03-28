@@ -1,3 +1,6 @@
 [submodule "KLogger"]
 	path = vendor/KLogger
 	url = https://github.com/si-mikey/KLogger.git
+[submodule "vendor/KLogger"]
+	path = vendor/KLogger
+	url = https://github.com/si-mikey/KLogger.git
