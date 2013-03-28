@@ -22,7 +22,7 @@ public function __construct( $webdriver_url = null ){
 	//instantiate logging
 	$log_path = basename(__FILE__ . '/../logs/');
 	$this->logger = new KLogger($log_path, KLogger::DEBUG);
-
+	$this->logger->logInfo('---------------Session Started------------------');
 	
 
 	 
@@ -55,7 +55,8 @@ public function start( $capability = null ){
 	//Check if the session id was provided by webdriver and assign it.
 	if( isset($session[1]) && !empty($session[1])  ){
 
-		$this->session_id = trim($session[1]);
+		$this->session_id = trim($session[1]);	
+		$this->logger->logInfo('Session ID is ' . $this->session_id);
 		
 	}else{
 
@@ -79,8 +80,10 @@ public function curl($http, $curl_url, $data = null, $encode_data = TRUE, $show_
 	$result = curl_exec($ch);
 	
 	$backtrace = debug_backtrace();
+
+	$calling_function = $backtrace[1]['function'];
 	
-	($data != null) ? $this->logger->logInfo("Perfomed " . $backtrace[1]['function']. " on $data") : $this->logger->logInfo("Performed " . $backtrace[1]['function']);
+	($data != null) ? $this->logger->logInfo("Perfomed " . $calling_function . " on $data") : $this->logger->logInfo("Performed " . $calling_function);
 
 	return $result;
 
@@ -93,7 +96,7 @@ public function __destruct(){
 }
 
 
-public static function jsonParse($json, $key = null){
+public function jsonParse($json, $key = null){
 
 	$value = json_decode(trim($json), true);
 	//TODO: ADD RESPONSE STATUS CODES
@@ -143,7 +146,7 @@ public function get_url(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id ."/url";
 	$response = $this->curl( "GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/status
@@ -151,7 +154,7 @@ public function get_status(){
 	
 	$full_url = $this->webdriver_url . '/status';
 	$response = $this->curl("GET", $full_url, NULL ,FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/sessions
@@ -159,7 +162,7 @@ public function get_sessions(){
 	
 	$full_url = $this->webdriver_url . '/sessions';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId
@@ -167,7 +170,7 @@ public function get_session(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id;
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -179,7 +182,7 @@ public function set_timeouts($type, $ms){
 	$data = array("type"=>"$type", "ms"=>$ms);
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -190,7 +193,7 @@ public function set_async_timeout( $ms ){
 	$data = array( "ms"=>$ms );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -201,7 +204,7 @@ public function set_implicit_wait( $ms ){
 	$data = array( "ms"=>$ms );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -210,7 +213,7 @@ public function get_window_handle(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window_handle';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window_handles
@@ -218,7 +221,7 @@ public function get_window_handles(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window_handles';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/forward
@@ -226,7 +229,7 @@ public function forward(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/forward';
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -235,7 +238,7 @@ public function back(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/back';
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -244,7 +247,7 @@ public function refresh(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/refresh';
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -255,7 +258,7 @@ public function js_execute($script, $args=null){
 	$data = array( "script"=>"$script", "args"=>array() );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);		
+	return $this->jsonParse($response);		
 
 }
 
@@ -265,7 +268,7 @@ public function screenshot(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/screenshot';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 //NEEDS ERROR CODE OR USE MESSAGE IN RESPONSE JSON
@@ -277,7 +280,7 @@ public function set_frame_focus($frame_name){
 	$data = array( "id"=>$frame_name );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);		
+	return $this->jsonParse($response);		
 }
 
 //NEEDS ERROR CODE OR USE MESSAGE IN RESPONSE JSON
@@ -288,7 +291,7 @@ public function set_window_focus($window_name){
 	$data = array( "name"=>$window_name );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);		
+	return $this->jsonParse($response);		
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#DELETE_/session/:sessionId/window
@@ -296,7 +299,7 @@ public function window_close(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window';
 	return $response = $this->curl("DELETE", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/size
@@ -308,7 +311,7 @@ public function set_window_size($width, $height, $win_handle="current"){
 	$data = array( "width"=>$width, "height"=>$height );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/window/:windowHandle/size
@@ -316,7 +319,7 @@ public function get_window_size( $win_handle="current" ){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/size';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/position
@@ -328,7 +331,7 @@ public function set_window_position($x, $y, $win_handle="current"){
 	$data = array( "x"=>$x, "y"=>$y );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 
 }
 
@@ -337,7 +340,7 @@ public function get_window_position( $win_handle="current" ){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/position';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/window/:windowHandle/maximize
@@ -345,7 +348,7 @@ public function window_maximize( $win_handle="current" ){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/window/' . $win_handle . '/maximize';
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/source
@@ -353,7 +356,7 @@ public function get_source_code(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/source';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/title
@@ -361,7 +364,7 @@ public function get_title(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/title';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/active
@@ -369,7 +372,7 @@ public function get_active_element(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/active';	
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response, "ELEMENT");
+	return $this->jsonParse($response, "ELEMENT");
 }
 
 
@@ -378,7 +381,7 @@ public function get_element_info($element){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element;	
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 
@@ -392,7 +395,7 @@ public function get_element( $using, $value ){
 	$data = array( "using"=>$using, "value"=>$value );
 	$data = json_encode($data);
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response, "ELEMENT");	
+	return $this->jsonParse($response, "ELEMENT");	
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/elements
@@ -403,7 +406,7 @@ public function get_elements( $using, $value ){
 	$data = array( "using"=>$using, "value"=>$value );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -415,7 +418,7 @@ public function get_element_child( $element, $using, $value ){
 	$data = array( "using"=>$using, "value"=>$value );
 	$data = json_encode($data);
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response, "ELEMENT");	
+	return $this->jsonParse($response, "ELEMENT");	
 }
 
 
@@ -427,7 +430,7 @@ public function get_element_children( $element, $using, $value ){
 	$data = array( "using"=>$using, "value"=>$value );
 	$data = json_encode($data);
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -447,7 +450,7 @@ public function click( ){
 
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/click';
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 
@@ -456,7 +459,7 @@ public function submit($element){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/submit';
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/text
@@ -475,7 +478,7 @@ public function get_text( ){
 
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/text';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);	
+	return $this->jsonParse($response);	
 }
 
 ///////////////////////////////////////////////////SEND KEYS//////////////////////////////////////////////
@@ -487,7 +490,7 @@ public function type($text){
 	$data = array("value" => array($text));
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/element/:id/value
@@ -559,7 +562,7 @@ public function send_key($using, $value, $key){
 	$data = array( "value" => array($keys[$key]) );
 	$data = json_encode($data);	
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 
 }
 
@@ -569,7 +572,7 @@ public function get_tag($element = null){
     
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/name';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 
@@ -578,7 +581,7 @@ public function clear($element = null){
 
    	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/clear';
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 
@@ -587,7 +590,7 @@ public function is_selected($element = null){
  
    	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/selected';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/enabled
@@ -595,7 +598,7 @@ public function is_enabled($element = null){
  
     	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/enabled';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/attribute/:name
@@ -603,7 +606,7 @@ public function get_attribute($element = null, $attribute = null){
  
    	 $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/attribute/' . $attribute;
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 
@@ -612,7 +615,7 @@ public function is_equal($element1, $element2){
      
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element1 . '/equals/' . $element2;
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-    return Boost::jsonParse($response);
+    return $this->jsonParse($response);
 }
 
 
@@ -621,7 +624,7 @@ public function is_displayed($element = null){
 
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/displayed';
     $response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-    return Boost::jsonParse($response);
+    return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location
@@ -629,7 +632,7 @@ public function get_location($element = null){
     
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/location';
     $response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-    return Boost::jsonParse($response);
+    return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location_in_view
@@ -637,7 +640,7 @@ public function get_location_in_view($element = null){
     
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/location_in_view';
     $response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-    return Boost::jsonParse($response);
+    return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/size
@@ -645,7 +648,7 @@ public function get_size($element = null){
     
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/size';
     $response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-    return Boost::jsonParse($response);
+    return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/css/:propertyName
@@ -668,7 +671,7 @@ public function get_css(){
 
     $full_url = $this->webdriver_url . '/session/' . $this->session_id . '/element/' . $element . '/css/' . $propertyName;
     $response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-    return Boost::jsonParse($response);
+    return $this->jsonParse($response);
 }
 
 
@@ -678,7 +681,7 @@ public function get_orientation(){
 	
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/orientation';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/alert_text
@@ -686,7 +689,7 @@ public function get_alert_text(){
 
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/alert_text';
 	$response = $this->curl("GET", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 
@@ -697,7 +700,7 @@ public function set_alert_text($text){
 	$data = array("text"=>$text);
 	$data = json_encode($data);
 	$response = $this->curl("POST", $full_url, $data, TRUE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 //http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/accept_alert
@@ -706,7 +709,7 @@ public function accept_alert(){
 
 	$full_url = $this->webdriver_url . '/session/' . $this->session_id . '/accept_alert';
 	$response = $this->curl("POST", $full_url, NULL, FALSE, FALSE);
-	return Boost::jsonParse($response);
+	return $this->jsonParse($response);
 }
 
 
