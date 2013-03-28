@@ -1,5 +1,5 @@
 <?php
-
+//require_once("/var/selenium/shared/BoostWebDriver/vendor/klogger/src/klogger.php");
 require_once("c:\\BoostWebDriver\\vendor\\KLogger\\src\\KLogger.php");
 
 class Boost{
