@@ -110,16 +110,7 @@ public function jsonParse($json, $key = null){
 
 
 	//TODO
-		if($key !== null && $value['value']){
-			
-			return $value["value"]["$key"];		
-		}else{
-			
-         	   if($value['value'] === false) return false;
-		   if($value['value'] === true) return true;
-		   return $value['value'];
-                
-    		} 
+	return ($key !== null && $value['value']) ?  $value["value"]["$key"] : $value['value'];	
 
 	
 }		
