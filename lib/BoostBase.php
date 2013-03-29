@@ -1,6 +1,6 @@
 <?php
-//require_once("/var/selenium/shared/BoostWebDriver/vendor/klogger/src/klogger.php");
-require_once("c:\\BoostWebDriver\\vendor\\KLogger\\src\\KLogger.php");
+define("DS", DIRECTORY_SEPARATOR);
+require_once(dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'KLogger' . DS . 'src' . DS . 'KLogger.php');
 
 class Boost{
 
@@ -20,7 +20,7 @@ public function __construct( $webdriver_url = null ){
 	$this->webdriver_url = trim($webdriver_url);
 	
 	//instantiate logging
-	$log_path = basename(__FILE__ . '/../logs/');
+	$log_path = realpath(dirname(__FILE__) . '/../logs/');
 	$this->logger = new KLogger($log_path, KLogger::DEBUG);
 	$this->logger->logInfo('---------------Session Started------------------');
 	 
@@ -80,7 +80,7 @@ public function curl($http, $curl_url, $data = null, $encode_data = TRUE, $show_
 	$backtrace = debug_backtrace();
 
 	$calling_function = $backtrace[1]['function'];
-	
+
 	($data != null) ? $this->logger->logInfo("Performed " . $calling_function . " on $data") : $this->logger->logInfo("Performed " . $calling_function);
 
 	return $result;

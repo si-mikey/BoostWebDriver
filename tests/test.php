@@ -1,6 +1,5 @@
 <?php
-
-require("c:\\BoostWebDriver\\lib\\BoostBase.php");
+require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'BoostBase.php' );
 
 //arguments are optional for constructor. 
 $session = new Boost(); 
@@ -8,7 +7,7 @@ $session = new Boost();
 $session->start("firefox");
 
 //must contains HTTP protocol. 
-$session->set_url("http://www.shutterstock.com/"); 
+$session->set_url("http://www.qa.shutterstock.com/"); 
 
 //$session->set_frame_focus("");
 
