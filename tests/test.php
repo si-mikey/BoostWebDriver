@@ -7,7 +7,7 @@ $session = new Boost();
 $session->start("firefox");
 
 //must contains HTTP protocol. 
-$session->set_url("http://www.qa.shutterstock.com/"); 
+$session->set_url("http://www.shutterstock.com/"); 
 
 //$session->set_frame_focus("");
 
