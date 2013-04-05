@@ -96,23 +96,24 @@ public function __destruct(){
 
 public function jsonParse($json, $key = null){
 
-	$value = json_decode(trim($json), true);
-	//TODO: ADD RESPONSE STATUS CODES
-	//print_r($value);
-	//exit();
+	$wdJson = json_decode(trim($json), true);
 
-	if( $value['status'] !== 0 && isset($value['status']) && $key == null ){
+	if( $wdJson['status'] != 0 || $wdJson['status'] != false ){
+
+		echo $wdJson['value']['message'];
+		$this->logger->logWarn($wdJson['value']['message']);
+	}
+
+	if ( $key != null && $wdJson['status'] == 0 ) {
 		
-		echo $value['value']['message'];
-		$this->logger->logWarn($value['value']['message']);
-
+		return $wdJson['value'][$key];
+			
+	}else{
+		
+		return $wdJson['value'];
 	}
 
 
-	//TODO
-	return ($key !== null && $value['value']) ?  $value["value"]["$key"] : $value['value'];	
-
-	
 }		
 
 
