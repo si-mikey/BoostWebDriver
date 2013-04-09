@@ -18,8 +18,19 @@ $session->window_maximize();
 //adding wait statement in following release
 //sleep(2);
 
-$session->get_url();
-//sleep(3);
+//$session->get_url();
+
+$session->click('xpath', '//a[@href="/login.mhtml"]');
+
+$session->type("markspicpage");
+
+$session->click("name", "password");
+
+//$session->type("testing");
+
+
+
+sleep(5);
 
 $session->kill(); 
 
