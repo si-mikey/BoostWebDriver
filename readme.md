@@ -44,7 +44,7 @@ Note:
 
 1. complete JWP command list integration
 2. improve code
-3. improve klogger integration for logging test requests to webdriver in realtime. Uses flatfile for now, moving to zeromq or rabbitmq for pub sub in near future
+3. improve klogger integration for logging test requests to webdriver in realtime. Uses flatfile for now. 
 
 ### License
 
