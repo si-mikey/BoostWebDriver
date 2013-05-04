@@ -26,7 +26,6 @@ $session->type("markspicpage");
 
 $session->click("name", "password");
 
-//$session->type("testing");
 
 
 
